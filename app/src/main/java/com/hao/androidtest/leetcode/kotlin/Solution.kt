@@ -1,5 +1,7 @@
 package com.hao.androidtest.leetcode.kotlin
 
+import java.util.ArrayList
+
 class Solution {
     //下一个排序
     fun nextPermutation(nums: IntArray): Unit {
@@ -57,5 +59,37 @@ class Solution {
             }
         }
         return ans;
+    }
+
+    //组合求和
+    fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
+        val ans: MutableList<List<Int>> = ArrayList()
+        val combine: MutableList<Int> = ArrayList()
+        dfs(candidates, target, ans, combine, 0)
+        return ans
+    }
+
+    fun dfs(
+        candidates: IntArray,
+        target: Int,
+        ans: MutableList<List<Int>>,
+        combine: MutableList<Int>,
+        idx: Int
+    ) {
+        if (idx == candidates.size) {
+            return
+        }
+        if (target == 0) {
+            ans.add(ArrayList(combine))
+            return
+        }
+        // 直接跳过
+        dfs(candidates, target, ans, combine, idx + 1)
+        // 选择当前数
+        if (target - candidates[idx] >= 0) {
+            combine.add(candidates[idx])
+            dfs(candidates, target - candidates[idx], ans, combine, idx)
+            combine.removeAt(combine.size - 1)
+        }
     }
 }
