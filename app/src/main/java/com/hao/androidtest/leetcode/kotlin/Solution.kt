@@ -4,6 +4,7 @@ import java.util.ArrayList
 
 class Solution {
     //下一个排序
+    //特征：交换
     fun nextPermutation(nums: IntArray): Unit {
         var i = nums.size - 2;
         while (i >= 0 && nums[i] >= nums[i + 1]) {
@@ -11,6 +12,7 @@ class Solution {
         }
         if (i >= 0) {
             var j = nums.size - 1;
+
             while (nums[i] >= nums[j]) {
                 j--;
             }
@@ -30,15 +32,17 @@ class Solution {
     }
 
     private fun swap(nums: IntArray, i: Int, j: Int) {
-        var temp = nums[i];
+        val temp = nums[i];
         nums[i] = nums[j];
         nums[j] = temp;
     }
 
     //在排序数组中查找元素的第一个和最后一个位置
+    //特征：有序、定位
+    //解决方法：二分搜索
     fun searchRange(nums: IntArray, target: Int): IntArray {
-        var leftIndex = binarySearch(nums, target, true);
-        var rightIndex = binarySearch(nums, target, false) - 1;
+        val leftIndex = binarySearch(nums, target, true);
+        val rightIndex = binarySearch(nums, target, false) - 1;
         if (leftIndex <= rightIndex && rightIndex < nums.size && nums[leftIndex] == target && nums[rightIndex] == target) {
             return intArrayOf(leftIndex, rightIndex);
         }
@@ -62,6 +66,8 @@ class Solution {
     }
 
     //组合求和
+    //特征：有序、可重用、全部可能
+    //解决方法：搜索回溯、深度遍历
     fun combinationSum(candidates: IntArray, target: Int): List<List<Int>> {
         val ans: MutableList<List<Int>> = ArrayList()
         val combine: MutableList<Int> = ArrayList()
@@ -69,7 +75,7 @@ class Solution {
         return ans
     }
 
-    fun dfs(
+    private fun dfs(
         candidates: IntArray,
         target: Int,
         ans: MutableList<List<Int>>,
@@ -91,5 +97,10 @@ class Solution {
             dfs(candidates, target - candidates[idx], ans, combine, idx)
             combine.removeAt(combine.size - 1)
         }
+    }
+
+    //旋转图像
+    fun rotate(matrix: Array<IntArray>): Unit {
+
     }
 }
